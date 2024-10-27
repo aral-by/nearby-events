@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Arama</title>
+</head>
+
+<body>
+    <div>
+        <h1>Etkinlik Arama</h1>
+        <form action="/events" method="POST">
+            <label for="country">Ülke Seçin:</label>
+            <select id="country" name="country">
+                <option value="">Bir ülke seçin</option>
+                <% countries.forEach(country=> { %>
+                    <option value="<%= country.alpha3Code %>">
+                        <%= country.name %>
+                    </option>
+                    <% }); %>
+            </select>
+            <button type="button" id="showCitiesButton">Şehirleri Göster</button>
+            <label for="city">Şehir Seçin:</label>
+            <select id="city" name="city">
+                <option value="">Önce bir ülke seçip şehirleri gösterin</option>
+            </select>
+            <button type="submit">Etkinlikleri Göster</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const showCitiesButton = document.getElementById('showCitiesButton');
+            const countrySelect = document.getElementById('country');
+            const citySelect = document.getElementById('city');
+
+            showCitiesButton.addEventListener('click', async () => {
+                console.log("Butona basıldı.");
+                const selectedCountry = countrySelect.value;
+
+                if (!selectedCountry) {
+                    alert('Lütfen önce bir ülke seçin.');
+                    return;
+                }
+
+                console.log("Seçilen ülke kodu:", selectedCountry);
+
+                // Şehir seçeneklerini temizle
+                citySelect.innerHTML = '<option value="">Bir şehir seçin</option>';
+
+                try {
+                    const response = await fetch(`/cities/${selectedCountry}`);
+                    if (!response.ok) {
+                        throw new Error(`API hatası: ${response.status}`);
+                    }
+
+                    const cities = await response.json();
+                    console.log("Alınan şehirler:", cities);
+
+                    cities.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Şehirler alınırken hata:', error);
+                    alert("Şehirler alınırken bir hata oluştu: " + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

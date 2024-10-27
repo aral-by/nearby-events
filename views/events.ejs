@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlikler Haritası</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Gömülü CSS -->
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Etkinlikler Haritası</h1>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Haritayı başlat
+        const map = L.map('map').setView([39.925533, 32.866287], 8); // Varsayılan koordinatlar ve zoom seviyesi
+
+        // OpenStreetMap katmanını ekle
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // EJS'den gelen etkinlik verisini al
+        const groupedEvents = <% - JSON.stringify(groupedEvents) %>
+
+        // Her koordinat grubu için işaretçi ekle
+        for (const [coordinates, events] of Object.entries(groupedEvents)) {
+            const [latitude, longitude] = coordinates.split(',').map(coord => parseFloat(coord.trim()));
+
+            // İşaretçi oluştur ve haritaya ekle
+            const marker = L.marker([latitude, longitude]).addTo(map);
+
+            // Açılır pencere içeriği oluştur
+            let popupContent = '<strong>Etkinlikler:</strong><ul>';
+            events.forEach(event => {
+                popupContent += <li><a href="${event.link}" target="_blank">${event.name}</a> - ${event.date}<br>${event.address}</li>;
+            });
+            popupContent += '</ul>';
+
+            // İşaretçiye açılır pencere ekle
+            marker.bindPopup(popupContent);
+        }
+    </script>
+</body>
+
+</html>

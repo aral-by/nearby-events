@@ -1,0 +1,38 @@
+{
+    "40.7128,-74.0060": [
+        {
+            "name": "Rock Concert",
+            "date": "2024-11-01",
+            "address": "Madison Square Garden, New York, NY",
+            "link": "https://www.ticketmaster.com/event/ABC123"
+        },
+        {
+            "name": "Art Exhibition",
+            "date": "2024-11-05",
+            "address": "The Met, New York, NY",
+            "link": "https://www.ticketmaster.com/event/DEF456"
+        }
+    ],
+    "34.0522,-118.2437": [
+        {
+            "name": "Food Festival",
+            "date": "2024-11-15",
+            "address": "Los Angeles Convention Center, Los Angeles, CA",
+            "link": "https://www.ticketmaster.com/event/GHI789"
+        }
+    ],
+    "51.5074,-0.1278": [
+        {
+            "name": "Theater Play",
+            "date": "2024-12-10",
+            "address": "West End Theatre, London, UK",
+            "link": "https://www.ticketmaster.com/event/JKL012"
+        },
+        {
+            "name": "Jazz Night",
+            "date": "2024-12-20",
+            "address": "Ronnie Scott's, London, UK",
+            "link": "https://www.ticketmaster.com/event/MNO345"
+        }
+    ]
+}
